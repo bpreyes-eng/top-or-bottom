@@ -1,0 +1,81 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090909"><title>Winners League</title>
+<style>
+:root{--bg:#090909;--card:#161616;--gold:#d9b34c;--text:#f7f7f7;--muted:#999;--line:#292929}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.app{max-width:560px;margin:auto;padding-bottom:84px}header{position:sticky;top:0;background:#090909f2;backdrop-filter:blur(10px);z-index:10;padding:12px 14px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px}.brand img:first-child{height:42px}.brand img:last-child{height:34px;max-width:210px;object-fit:contain}
+.sub{font-size:10px;color:var(--muted);letter-spacing:.08em;margin-top:5px}.section{padding:12px 12px 0}.card{background:linear-gradient(#191919,#121212);border:1px solid var(--line);border-radius:17px;padding:13px}
+.title{font-size:11px;color:#f1d47e;font-weight:900;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}.hero{background:linear-gradient(135deg,#2a210d,#141414 62%)}
+.clock{font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}.big{font-size:25px;font-weight:900;margin-top:4px}.owner{font-weight:800;color:#f1d47e}
+.pill{display:inline-block;margin-top:8px;border:1px solid #5b481a;background:#211b0c;color:#f1d47e;padding:6px 9px;border-radius:999px;font-size:11px;font-weight:800}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:12px}.stat{background:#101010;border:1px solid var(--line);border-radius:12px;padding:9px 4px;text-align:center}
+.stat b{display:block;color:#f1d47e;font-size:19px}.stat span{font-size:9px;color:var(--muted)}.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:11px}
+button{font:inherit}.btn{border:0;border-radius:12px;padding:11px;font-weight:900;cursor:pointer}.gold{background:linear-gradient(#e3c363,#b58b2f);color:#070707}.dark{background:#252525;color:white;border:1px solid #383838}
+.red{background:#3b1818;color:#ffb8b8;border:1px solid #672c2c}.payout{display:grid;grid-template-columns:1fr 1fr;gap:8px}.pay{background:#151515;border:1px solid #4b3c18;border-radius:14px;padding:11px;text-align:center}
+.pay b{display:block;color:#f1d47e;font-size:18px}.pay span{font-size:10px;color:var(--muted)}.table{width:100%;border-collapse:collapse;font-size:12px}th{font-size:9px;color:var(--muted);text-align:left;padding:7px 5px;border-bottom:1px solid var(--line)}
+td{padding:9px 5px;border-bottom:1px solid #222;vertical-align:top}.rank{font-weight:900;color:#f1d47e}.teamname{font-weight:900}.small{font-size:10px;color:var(--muted);margin-top:2px}
+.chips{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}.chip{font-size:9px;background:#222;border:1px solid #333;border-radius:999px;padding:3px 6px}.pts{text-align:right;font-weight:900;color:#f1d47e}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.teamBtn{background:#181818;border:1px solid #303030;color:#fff;border-radius:11px;padding:10px 8px;text-align:left}.teamBtn:disabled{opacity:.35;text-decoration:line-through}
+.round{color:#f1d47e;font-size:11px;font-weight:900;margin:13px 0 6px}.pickrow{display:grid;grid-template-columns:38px 1fr 1fr;gap:6px;padding:8px 0;border-bottom:1px solid #222;font-size:11px}.pickrow div:last-child{text-align:right}
+.formrow{display:grid;grid-template-columns:1fr 1.2fr;gap:7px;margin-bottom:7px}input{width:100%;background:#101010;color:white;border:1px solid #333;border-radius:10px;padding:10px}
+.record{display:grid;grid-template-columns:1.5fr .7fr .7fr .8fr;gap:6px;align-items:center;padding:7px 0;border-bottom:1px solid #222;font-size:11px}.record.head{font-size:9px;color:var(--muted)}.record input{padding:7px;text-align:center}
+.undrafted{display:grid;grid-template-columns:1fr 1fr;gap:7px}.u{background:#181818;border:1px dashed #5a471d;border-radius:12px;padding:10px}.notice{font-size:10px;color:var(--muted);line-height:1.45}
+.view{display:none}.view.active{display:block}nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(560px,100%);display:grid;grid-template-columns:repeat(5,1fr);background:#101010f7;border-top:1px solid var(--line);padding:7px 4px calc(7px + env(safe-area-inset-bottom));z-index:20}
+nav button{background:none;border:0;color:#888;font-size:9px;padding:5px 2px}nav button.active{color:#f1d47e;font-weight:900}nav span{display:block;font-size:18px;margin-bottom:2px}
+.motto{text-align:center;color:#756331;font-size:10px;letter-spacing:.08em;padding:18px}@media(max-width:380px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+</style></head><body><div class="app">
+<header><div class="brand"><img src="logo1.png"><img src="logo2.png"></div><div class="sub">2026 NFL REGULAR SEASON • SAFARI PROTOTYPE</div></header>
+<main>
+<section id="dashboard" class="view active">
+<div class="section"><div class="card hero"><div class="clock">On the clock</div><div class="big" id="clockTeam"></div><div class="owner" id="clockOwner"></div><span class="pill" id="pickPill"></span>
+<div class="stats"><div class="stat"><b id="done">0</b><span>Picks Done</span></div><div class="stat"><b id="left">30</b><span>Picks Left</span></div><div class="stat"><b id="avail">32</b><span>Available</span></div><div class="stat"><b id="round">1</b><span>Round</span></div></div>
+<div class="actions"><button class="btn gold" onclick="go('draft')">Make Your Pick</button><button class="btn dark" onclick="go('draft')">Draft Board</button></div></div></div>
+<div class="section"><div class="payout"><div class="pay"><b>50%</b><span>Highest Score Wins</span></div><div class="pay"><b>50%</b><span>Lowest Score Wins</span></div></div></div>
+<div class="section"><div class="card"><div class="title">League Standings</div><div id="standings"></div></div></div>
+<div class="section"><div class="card"><div class="title">Undrafted Teams</div><div class="undrafted" id="undrafted"></div></div></div>
+<div class="section"><div class="card"><div class="title">Draft Controls</div><div class="actions"><button class="btn dark" onclick="loadMock()">Load Mock Draft</button><button class="btn red" onclick="resetDraft()">Reset Mock Draft</button></div><button class="btn gold" style="width:100%;margin-top:8px" onclick="startOfficial()">Start Official Draft</button></div></div>
+<div class="motto">ONE TEAM. ONE LEAGUE. TWO WINNERS.</div></section>
+
+<section id="draft" class="view"><div class="section"><div class="card"><div class="title">Draft Board</div><div class="notice">Tap a team to assign it to the owner currently on the clock. Snake order advances automatically.</div><div class="round">Available NFL Teams</div><div class="grid" id="teamButtons"></div></div></div><div class="section"><div class="card"><div class="title">All 30 Picks</div><div id="board"></div></div></div></section>
+
+<section id="teams" class="view"><div class="section"><div class="card"><div class="title">Owners & Team Names</div><div class="notice" style="margin-bottom:9px">Edit the sample draft order and custom team names here.</div><div id="owners"></div><button class="btn gold" style="width:100%" onclick="saveOwners()">Save Changes</button></div></div></section>
+
+<section id="records" class="view"><div class="section"><div class="card"><div class="title">NFL Team Records</div><div class="notice">Enter wins and ties. Standings update automatically: win = 1 point, tie = 0.5.</div><div class="record head"><div>TEAM</div><div>W</div><div>T</div><div>PTS</div></div><div id="recordsList"></div></div></div></section>
+
+<section id="schedule" class="view"><div class="section"><div class="card"><div class="title">Schedule / Updates</div><p><b>Weekly standings update:</b><br><span class="small">After Monday Night Football</span></p><p><b>Payout:</b><br><span class="small">Highest score 50% • Lowest score 50%</span></p><p class="notice">This prototype uses manual record entry. A hosted live version can later connect to an NFL scores source.</p></div></div></section>
+</main>
+<nav><button class="active" data-v="dashboard" onclick="go('dashboard')"><span>⌂</span>Dashboard</button><button data-v="draft" onclick="go('draft')"><span>▦</span>Draft</button><button data-v="teams" onclick="go('teams')"><span>♟</span>Teams</button><button data-v="records" onclick="go('records')"><span>≡</span>Records</button><button data-v="schedule" onclick="go('schedule')"><span>◷</span>Schedule</button></nav>
+</div>
+<script>
+const NFL=["Arizona Cardinals", "Atlanta Falcons", "Baltimore Ravens", "Buffalo Bills", "Carolina Panthers", "Chicago Bears", "Cincinnati Bengals", "Cleveland Browns", "Dallas Cowboys", "Denver Broncos", "Detroit Lions", "Green Bay Packers", "Houston Texans", "Indianapolis Colts", "Jacksonville Jaguars", "Kansas City Chiefs", "Las Vegas Raiders", "Los Angeles Chargers", "Los Angeles Rams", "Miami Dolphins", "Minnesota Vikings", "New England Patriots", "New Orleans Saints", "New York Giants", "New York Jets", "Philadelphia Eagles", "Pittsburgh Steelers", "San Francisco 49ers", "Seattle Seahawks", "Tampa Bay Buccaneers", "Tennessee Titans", "Washington Commanders"],OWN=["Andy","Anthony","Bernardo","Rod","Rob","John","Art","David","Rico","Ken"],NAMES=["TBD","Quest for Shiva","Tua in the Pink","I cho cho choose u","Japilino","TBD","Takin Da Browns to Da Super Bowl","Salvadorks","Jed York","Kick Names, Take Ass"];
+const MOCK=[
+["Andy","Philadelphia Eagles"],["Anthony","Buffalo Bills"],["Bernardo","Baltimore Ravens"],["Rod","Kansas City Chiefs"],["Rob","Detroit Lions"],
+["John","Green Bay Packers"],["Art","San Francisco 49ers"],["David","Los Angeles Rams"],["Rico","Tampa Bay Buccaneers"],["Ken","Cincinnati Bengals"],
+["Ken","Denver Broncos"],["Rico","Minnesota Vikings"],["David","Los Angeles Chargers"],["Art","Washington Commanders"],["John","Houston Texans"],
+["Rob","Pittsburgh Steelers"],["Rod","Seattle Seahawks"],["Bernardo","Miami Dolphins"],["Anthony","Chicago Bears"],["Andy","Dallas Cowboys"],
+["Andy","New England Patriots"],["Anthony","Arizona Cardinals"],["Bernardo","Jacksonville Jaguars"],["Rod","Atlanta Falcons"],["Rob","Las Vegas Raiders"],
+["John","Indianapolis Colts"],["Art","Carolina Panthers"],["David","Cleveland Browns"],["Rico","New Orleans Saints"],["Ken","New York Jets"]
+];
+let state=JSON.parse(localStorage.getItem("wl_state")||"null")||{owners:OWN.map((name,i)=>({name,teamName:NAMES[i]})),picks:[],records:Object.fromEntries(NFL.map(t=>[t,{w:0,t:0}]))};
+const save=()=>localStorage.setItem("wl_state",JSON.stringify(state)); const order=()=>[...state.owners.map(o=>o.name),...state.owners.map(o=>o.name).reverse(),...state.owners.map(o=>o.name)];
+const o=n=>state.owners.find(x=>x.name===n)||{name:n,teamName:n}; const p=t=>(state.records[t]?.w||0)+(state.records[t]?.t||0)*.5;
+function go(v){document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));document.getElementById(v).classList.add("active");document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.v===v));window.scrollTo(0,0);render()}
+function render(){
+ let n=state.picks.length,ord=order(),next=ord[n],r=Math.min(Math.floor(n/10)+1,3),drafted=new Set(state.picks.map(x=>x.team)); let obj=next?o(next):null;
+ clockTeam.textContent=obj?obj.teamName:"Draft Complete";clockOwner.textContent=obj?obj.name:"All 30 teams selected";pickPill.textContent=n<30?`Pick ${n+1} • Round ${r}`:"Draft Complete";done.textContent=n;left.textContent=30-n;avail.textContent=32-n;round.textContent=r;
+ teamButtons.innerHTML=NFL.map(t=>`<button class="teamBtn" ${drafted.has(t)||n>=30?"disabled":""} onclick="pick('${t.replaceAll("'","\'")}')">${t}</button>`).join("");
+ board.innerHTML=[1,2,3].map(rr=>`<div class="round">Round ${rr}</div>`+ord.slice((rr-1)*10,rr*10).map((owner,i)=>{let idx=(rr-1)*10+i,x=state.picks[idx];return `<div class="pickrow"><div>#${idx+1}</div><div><b>${o(owner).teamName}</b><div class="small">${owner}</div></div><div>${x?x.team:"—"}</div></div>`}).join("")).join("");
+ let st=state.owners.map(x=>({...x,pts:state.picks.filter(q=>q.owner===x.name).reduce((s,q)=>s+p(q.team),0),teams:state.picks.filter(q=>q.owner===x.name).map(q=>q.team)})).sort((a,b)=>b.pts-a.pts||a.name.localeCompare(b.name));
+ standings.innerHTML=`<table class="table"><tr><th>#</th><th>TEAM / OWNER</th><th style="text-align:right">PTS</th></tr>${st.map((x,i)=>`<tr><td class="rank">${i+1}</td><td><div class="teamname">${x.teamName}</div><div class="small">${x.name}</div><div class="chips">${x.teams.map(t=>`<span class="chip">${t}</span>`).join("")||'<span class="small">No picks yet</span>'}</div></td><td class="pts">${x.pts.toFixed(1)}</td></tr>`).join("")}</table>`;
+ let rem=NFL.filter(t=>!drafted.has(t));let u=n===30?rem:rem.slice(-2);undrafted.innerHTML=u.map(t=>`<div class="u"><b>${t}</b><div class="small">${n===30?"Undrafted":"Sample preview"}</div></div>`).join("");
+ owners.innerHTML=state.owners.map((x,i)=>`<div class="formrow"><input id="on${i}" value="${x.name}"><input id="tn${i}" value="${x.teamName}"></div>`).join("");
+ recordsList.innerHTML=NFL.map(t=>{let q=state.records[t]||{w:0,t:0};return `<div class="record"><div>${t}</div><input type="number" min="0" value="${q.w}" onchange="rec('${t.replaceAll("'","\'")}','w',this.value)"><input type="number" min="0" value="${q.t}" onchange="rec('${t.replaceAll("'","\'")}','t',this.value)"><div class="pts">${p(t).toFixed(1)}</div></div>`}).join("");
+}
+function pick(team){if(state.picks.length>=30||state.picks.some(x=>x.team===team))return;state.picks.push({owner:order()[state.picks.length],team});save();render()}
+function rec(team,k,v){state.records[team]=state.records[team]||{w:0,t:0};state.records[team][k]=Math.max(0,Number(v)||0);save();render()}
+function saveOwners(){let old=state.owners.map(x=>x.name),next=state.owners.map((x,i)=>({name:document.getElementById("on"+i).value.trim()||x.name,teamName:document.getElementById("tn"+i).value.trim()||x.teamName})),m=Object.fromEntries(old.map((x,i)=>[x,next[i].name]));state.picks=state.picks.map(x=>({...x,owner:m[x.owner]||x.owner}));state.owners=next;save();alert("Saved");render()}
+function loadMock(){state.picks=MOCK.map(x=>({owner:x[0],team:x[1]}));save();go("dashboard")} function resetDraft(){if(confirm("Reset all draft picks?")){state.picks=[];save();render()}} function startOfficial(){if(confirm("Start the official draft and clear mock picks?")){state.picks=[];save();go("draft")}}
+render();
+</script></body></html>
