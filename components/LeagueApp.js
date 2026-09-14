@@ -1,9 +1,8 @@
 'use client';
 
-import { useMemo, useState } from 'react';
-
+import { useEffect, useMemo, useState } from 'react';
 const tabs = [
-  ['home','⌂','Home'], ['standings','▤','Standings'], ['team','★','My Team'], ['moves','⇄','Moves'], ['commish','⚙','Commish'],
+  ['home','⌂','Home'], ['standings','▤','Standings'], ['schedule','▦','Schedule'],[ 'team','★','My Team'], ['moves','⇄','Moves'], ['commish','⚙','Commish'],
 ];
 const fullNames = {
   ARI:'Arizona Cardinals', ATL:'Atlanta Falcons', BAL:'Baltimore Ravens', BUF:'Buffalo Bills', CAR:'Carolina Panthers',
@@ -22,7 +21,7 @@ export default function LeagueApp({ league }) {
   const owner = useMemo(() => league.owners.find(o => o.id === selectedOwner) || league.owners[0], [league.owners, selectedOwner]);
   return <main className="appShell"><div className="content">
     <header className="hero"><div className="eyebrow">PICK YOUR POSITION</div><h1>TOP <span>OR</span> BOTTOM</h1><div className="season">2026 NFL Season</div></header>
-    {tab==='home' && <Home league={league} setTab={setTab}/>} {tab==='standings' && <Standings owners={league.owners}/>} {tab==='team' && <MyTeam owners={league.owners} owner={owner} selectedOwner={selectedOwner} setSelectedOwner={setSelectedOwner}/>} {tab==='moves' && <Moves league={league} owner={owner}/>} {tab==='commish' && <Commish league={league}/>} 
+    {tab==='home' && <Home league={league} setTab={setTab}/>} {tab==='standings' && <Standings owners={league.owners}/>} {tab==='schedule' && <Schedule/>} {tab==='team' && <MyTeam owners={league.owners} owner={owner} selectedOwner={selectedOwner} setSelectedOwner={setSelectedOwner}/>} {tab==='moves' && <Moves league={league} owner={owner}/>} {tab==='commish' && <Commish league={league}/>} 
   </div><nav className="bottomNav">{tabs.map(([key,icon,label])=><button key={key} className={tab===key?'active':''} onClick={()=>setTab(key)}><span className="navIcon">{icon}</span><span>{label}</span></button>)}</nav></main>;
 }
 
@@ -36,7 +35,57 @@ function Home({league,setTab}) { const pending = league.addDropRequests.filter(x
 
 function Standings({owners}) { const sorted=[...owners].sort((a,b)=>(b.points||0)-(a.points||0)||a.draftSlot-b.draftSlot); return <section className="card flush"><div className="pageTitle">Standings</div><div className="subtleNote">Roster ownership is live. Weekly NFL result scoring is the next data connection.</div><div className="standingsHeader"><span>RK</span><span>OWNER</span><span>PTS</span></div>{sorted.map((o,i)=><OwnerRow key={o.id} owner={o} rank={i+1} detailed/>)}</section>; }
 function OwnerRow({owner,rank,detailed=false}) { return <div className="ownerRow"><div className="rank">{rank}</div><div className="ownerInfo"><strong>{owner.teamName}</strong><small>{owner.ownerName}{owner.commissioner?' • Commissioner':''}</small><div className="teamChips">{owner.teams.map(t=><span key={t}>{t}</span>)}</div></div>{detailed&&<div className="points">{Number(owner.points||0).toFixed(1)}</div>}</div>; }
+function Schedule(){
+  const [games,setGames]=useState([]);
+  const [week,setWeek]=useState(1);
+  const [loading,setLoading]=useState(true);
+  useEffect(()=>{
+  setLoading(true);
+  fetch(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=2026&seasontype=2&week=${week}`)
+    .then(r=>r.json())
+    .then(d=>setGames(d.events||[]))
+    .catch(()=>setGames([]))
+    .finally(()=>setLoading(false));
+},[week]);
 
+return <section className="card">
+  <div className="pageTitle">NFL Schedule</div>
+
+  <div className="moveTabs">
+    {Array.from({length:18},(_,i)=>
+      <button
+        key={i+1}
+        className={week===i+1?'active':''}
+        onClick={()=>setWeek(i+1)}
+      >
+        W{i+1}
+      </button>
+    )}
+  </div>
+
+  {loading
+    ? <div className="muted">Loading schedule...</div>
+    : games.length
+      ? games.map(g=>
+          <div className="historyRow" key={g.id}>
+            <div>{g.name}</div>
+            <div className="muted">
+              {new Date(g.date).toLocaleString([],{
+                weekday:'short',
+                month:'short',
+                day:'numeric',
+                hour:'numeric',
+                minute:'2-digit'
+              })}
+              {' • '}
+              {g.status?.type?.shortDetail||''}
+            </div>
+          </div>
+        )
+      : <div className="muted">No games found.</div>
+  }
+</section>;
+}
 function MyTeam({owners,owner,selectedOwner,setSelectedOwner}) { return <>
   <section className="card"><div className="sectionTitle">MY TEAM</div><label className="fieldLabel">Owner preview</label><select className="select" value={selectedOwner} onChange={e=>setSelectedOwner(Number(e.target.value))}>{owners.map(o=><option key={o.id} value={o.id}>{o.ownerName} — {o.teamName}</option>)}</select><div className="subtleNote">This selector disappears once owner login is connected.</div></section>
   <section className="card profileCard"><div className="avatar">{owner.ownerName.slice(0,1)}</div><div><div className="profileName">{owner.teamName}</div><div className="muted">{owner.ownerName}{owner.commissioner?' • Commissioner':''}</div></div></section>
