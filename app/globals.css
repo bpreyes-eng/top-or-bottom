@@ -915,3 +915,15 @@ button:focus-visible,select:focus-visible { outline: 2px solid #ffe28b; outline-
   .card { padding: 14px; }
   .leagueSummary { padding: 12px 5px; }
 }
+
+/* Original league artwork */
+.artworkHero { padding-top: 8px; }
+.brandArtwork { position: relative; z-index: 1; width: min(100%, 400px); margin: 0 auto 12px; }
+.officialLogo { display: block; width: 100%; height: auto; border-radius: 10px; }
+.artworkHero .stadiumLights { z-index: 0; top: 12px; }
+@media (min-width: 960px) {
+  .artworkHero { padding-top: 8px; min-height: 210px; }
+  .brandArtwork { width: 320px; margin-left: 0; }
+  .artworkHero .season { width: 320px; }
+  .artworkHero .leagueMotto { top: 70px; }
+}
