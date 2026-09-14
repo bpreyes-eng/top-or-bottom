@@ -16,6 +16,8 @@ const tabs = [
 
   ['moves', '⇄', 'Moves'],
 
+  ['rules', '☷', 'Rules'],
+
   ['commish', '⚙', 'Commish'],
 
 ];
@@ -182,6 +184,8 @@ export default function LeagueApp({ league }) {
 
         {tab === 'schedule' && <Schedule league={league} />}
 
+        {tab === 'rules' && <LeagueRules />}
+
         {tab === 'team' && (
 
           <MyTeam
@@ -347,7 +351,10 @@ function Home({ league, setTab }) {
 
       <section className="card scoringCard">
 
-        <div className="sectionTitle">HOW SCORING WORKS</div>
+        <div className="cardHeader">
+          <div className="sectionTitle">HOW SCORING WORKS</div>
+          <button className="textButton" onClick={() => setTab('rules')}>League rules ›</button>
+        </div>
 
         <div className="scoreRules">
 
@@ -1173,4 +1180,88 @@ function Commish({ league }) {
 
   );
 
+}
+
+const leagueRuleSections = [
+  {
+    title: 'League & draft',
+    rules: [
+      '10 owners draft 3 NFL teams each in a 3-round snake draft.',
+      'The 2 undrafted NFL teams become free agents.',
+      'Every owner must maintain exactly 3 NFL teams.'
+    ]
+  },
+  {
+    title: 'Scoring',
+    rules: [
+      'Only NFL regular-season games count.',
+      'Each NFL win earns 1 league point. A tie earns 0.5 points. A loss or bye earns 0.',
+      'Weekly standings are updated after Monday Night Football.',
+      'Prior wins do not transfer with an added or traded team. Scoring follows the applicable effective time.'
+    ]
+  },
+  {
+    title: 'Entry fee & payouts',
+    rules: [
+      'The entry fee is $20 per owner, creating a $200 starting pot.',
+      'The highest league-point total wins 50% of the pot. The lowest league-point total wins the other 50%.',
+      'Completed add/drop fees increase the league pot. Trades are free.'
+    ]
+  },
+  {
+    title: 'Tie-breakers',
+    rules: [
+      'Top prize: highest combined point differential across the owner’s 3 teams, then highest combined NFL points scored.',
+      'Bottom prize: lowest combined point differential, then lowest combined NFL points scored.',
+      'Combined NFL points scored means the actual football points scored by the teams, not league points earned for wins and ties.',
+      'If owners remain tied after both tie-breakers, they split the applicable prize.'
+    ]
+  },
+  {
+    title: 'Add / drop & payment',
+    rules: [
+      'An owner may add only a team on the free-agent list and must drop a rostered team to keep exactly 3 teams.',
+      'Priority goes to the first valid request, using the site’s recorded timestamp.',
+      'Each completed add/drop costs $10. Payment is by Venmo and is due within 24 hours after approval; otherwise the request expires.',
+      'A transaction is not valid until payment is received.',
+      'The added team earns points only for eligible games that have not started at the effective submission time. Its earlier wins are not included.'
+    ]
+  },
+  {
+    title: 'Trades',
+    rules: [
+      'Trades are free and must exchange equal numbers of teams: 1-for-1, 2-for-2, or 3-for-3. No 2-for-1 trades.',
+      'An owner may accept, deny, or counter an offer. Each offer or counteroffer expires after 48 hours.',
+      'Trades require commissioner approval. Approved trades take effect when the weekly lock ends.',
+      'Prior wins stay with their original owner; they do not transfer in a trade.'
+    ]
+  },
+  {
+    title: 'Weekly lock & commissioner',
+    rules: [
+      'Roster transactions are locked from the first game’s kickoff through the end of the final Monday game.',
+      'The lock ends when the game is finished, rather than at a fixed timer deadline.',
+      'The commissioner may correct accidental roster moves. Corrections must be logged and auditable.'
+    ]
+  }
+];
+
+function LeagueRules() {
+  return (
+    <div className="rulesPage">
+      <section className="card">
+        <div className="pageTitle">League Rules</div>
+        <div className="goldRule" />
+        <p className="muted bodyText">Top or Bottom • 2026 NFL regular season</p>
+      </section>
+      {leagueRuleSections.map(section => (
+        <section className="card" key={section.title}>
+          <h2 className="sectionTitle">{section.title}</h2>
+          <ul className="leagueRulesList">
+            {section.rules.map(rule => <li key={rule}>{rule}</li>)}
+          </ul>
+        </section>
+      ))}
+    </div>
+  );
 }

@@ -927,3 +927,13 @@ button:focus-visible,select:focus-visible { outline: 2px solid #ffe28b; outline-
   .artworkHero .season { width: 320px; }
   .artworkHero .leagueMotto { top: 70px; }
 }
+
+/* Owner-facing league rules */
+.bottomNav button { width: min(14.285%, 110px); }
+.rulesPage { max-width: 800px; margin: 0 auto; }
+.rulesPage h2 { margin-top: 0; text-transform: uppercase; }
+.leagueRulesList { margin: 0; padding-left: 20px; color: #e4e1db; font-size: 14px; line-height: 1.65; }
+.leagueRulesList li + li { margin-top: 10px; }
+@media (max-width: 380px) {
+  .bottomNav button { font-size: 8px; }
+}
