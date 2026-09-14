@@ -166,7 +166,18 @@ export default function LeagueApp({ league }) {
 
           <div className="stadiumLights rightLights" />
 
-          <div className="brandLockup">
+          <div className="brandLockup" role="img" aria-label="Top or Bottom">
+            <svg className="brandCrown" viewBox="0 0 100 55" aria-hidden="true">
+              <defs>
+                <linearGradient id="crownGold" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#fff3b1" />
+                  <stop offset="45%" stopColor="#f2c644" />
+                  <stop offset="100%" stopColor="#986007" />
+                </linearGradient>
+              </defs>
+              <path d="M12 15 L30 30 L36 9 L50 27 L65 9 L71 30 L89 15 L80 44 L21 44 Z M22 48 H79 V53 H22 Z" fill="url(#crownGold)" stroke="#e7b849" strokeWidth="1.5" />
+              <g fill="#ffdf77"><circle cx="11" cy="13" r="3"/><circle cx="36" cy="7" r="3"/><circle cx="65" cy="7" r="3"/><circle cx="90" cy="13" r="3"/></g>
+            </svg>
 
             <span className="upArrow">↑</span>
 
@@ -185,6 +196,7 @@ export default function LeagueApp({ league }) {
           <div className="eyebrow">PICK YOUR POSITION</div>
 
           <div className="season">2026 NFL REGULAR SEASON</div>
+          <div className="leagueMotto">10 OWNERS <span>•</span> 30 NFL TEAMS <span>•</span> TOP OR BOTTOM WINS</div>
 
         </header>
 
@@ -264,7 +276,7 @@ function Home({ league, setTab }) {
 
   return (
 
-    <>
+    <div className="homeDashboard">
 
       <section className="card leagueSummary">
 
@@ -318,7 +330,7 @@ function Home({ league, setTab }) {
 
           <button className="textButton" onClick={() => setTab('standings')}>
 
-            View all ›
+            Full standings ›
 
           </button>
 
@@ -332,7 +344,7 @@ function Home({ league, setTab }) {
 
         <div className="miniRows">
 
-          {sorted.slice(0, 5).map((o, i) => (
+          {sorted.map((o, i) => (
 
             <OwnerRow
 
@@ -347,6 +359,7 @@ function Home({ league, setTab }) {
               detailed
 
               leader={i === 0}
+              bottom={i === sorted.length - 1}
 
             />
 
@@ -386,7 +399,7 @@ function Home({ league, setTab }) {
 
       </section>
 
-    </>
+    </div>
 
   );
 

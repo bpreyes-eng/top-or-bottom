@@ -793,3 +793,125 @@ body { min-height: 100vh; }
   .brandTop, .brandBottom { font-size: 49px; }
 
 }
+
+/* Crown branding and stadium dashboard */
+.appShell {
+  background:
+    radial-gradient(ellipse at 8% 2%,rgba(153,191,226,.22),transparent 24rem),
+    radial-gradient(ellipse at 96% 6%,rgba(153,191,226,.16),transparent 25rem),
+    radial-gradient(ellipse at 50% 0,rgba(178,132,26,.15),transparent 36rem),
+    repeating-linear-gradient(112deg,transparent 0 110px,rgba(111,141,110,.025) 110px 113px),
+    linear-gradient(#05080d,#030504 68%,#050505);
+  background-attachment: fixed;
+}
+.content { max-width: 620px; }
+.hero { padding-top: 43px; padding-bottom: 24px; overflow: visible; }
+.brandLockup {
+  position: relative;
+  width: max-content;
+  max-width: 100%;
+  margin: 0 auto;
+  isolation: isolate;
+  gap: 2px;
+  filter: drop-shadow(0 3px 2px #000);
+}
+.brandCrown {
+  position: absolute;
+  width: 65px;
+  height: 36px;
+  top: -37px;
+  left: 42%;
+  transform: translateX(-50%) rotate(-5deg);
+  filter: drop-shadow(0 1px 2px #1d1301);
+}
+.brandTop,.brandBottom {
+  font-family: Impact,"Arial Black",sans-serif;
+  font-weight: 950;
+  font-size: clamp(38px,10.8vw,54px);
+  letter-spacing: -1.6px;
+  line-height: .88;
+  background: linear-gradient(175deg,#fff5b4 0%,#f9d766 23%,#d19b20 47%,#ffdf72 52%,#9c6508 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  -webkit-text-stroke: .4px #e8bd50;
+}
+.brandTop em {
+  -webkit-text-fill-color: #f5f5f5;
+  -webkit-text-stroke: 0;
+  font-size: 24px;
+}
+.upArrow,.downArrow {
+  font-family: Impact,"Arial Black",sans-serif;
+  font-style: normal;
+  font-size: 76px;
+  color: #e8b937;
+  text-shadow: 1px 2px #7d4e09,0 0 18px #8f621b55;
+}
+.eyebrow { margin-top: 11px; font-style: italic; color: #f4eddc; letter-spacing: 2.7px; font-size: 11px; }
+.season { color: #b5b3ac; font-size: 10px; }
+.leagueMotto { margin-top: 18px; font-size: 9px; font-weight: 850; letter-spacing: .65px; color: #e4e4e6; }
+.leagueMotto span { color: #e5b944; padding: 0 4px; }
+.stadiumLights {
+  top: 0; width: 64px; height: 40px; opacity: .65;
+  background: radial-gradient(circle,#f3f8ff 0 12%,#a9c9ed 14% 20%,transparent 30%) 0 0/16px 16px;
+  filter: drop-shadow(0 0 8px #9cbfe6);
+  pointer-events: none;
+}
+.leftLights { left: 0; transform: rotate(24deg); }
+.rightLights { right: 0; transform: rotate(-24deg); }
+.card {
+  border-color: #aa8535;
+  border-radius: 12px;
+  background: linear-gradient(135deg,rgba(17,18,19,.97),rgba(3,4,5,.97));
+  box-shadow: inset 0 1px 0 #efd18730,0 8px 24px #0008;
+}
+.sectionTitle { color: #f4cc58; letter-spacing: .8px; }
+.homeDashboard .standingsCard .cardHeader { gap: 8px; }
+.ownerInfo strong { white-space: normal; overflow-wrap: anywhere; }
+.ownerInfo small { color: #aaa8a3; }
+.ownerRow { padding: 13px 7px; border-color: #ffffff15; }
+.ownerRow.leaderRow { background: linear-gradient(90deg,#28531970,#17300c25); border-radius: 6px; }
+.ownerRow.bottomRow { background: linear-gradient(90deg,#63181860,#39101020); border-radius: 6px; }
+.points { font-variant-numeric: tabular-nums; }
+.teamBadge { border-radius: 6px; border-color: #6e704b80; background: linear-gradient(#1a1d1b,#080a09); }
+.largeBadge { border-radius: 9px; }
+.summaryStat strong { font-size: 21px; }
+.summaryStat small,.summaryStat em { color: #b4b0a5; font-size: 8px; }
+.summaryIcon { font-size: 20px; }
+.textButton { min-height: 36px; }
+.bottomNav { border-color: #a27b2a; box-shadow: 0 -5px 25px #0008; }
+.bottomNav button { min-height: 44px; }
+.bottomNav .active { background: linear-gradient(0deg,#9d76151f,transparent); border-radius: 8px; }
+button:focus-visible,select:focus-visible { outline: 2px solid #ffe28b; outline-offset: 3px; }
+@media (min-width: 960px) {
+  .content { max-width: 1220px; padding: 28px 24px 115px; }
+  .hero { min-height: 150px; padding: 42px 0 24px; }
+  .brandLockup { margin-left: 0; }
+  .eyebrow,.season { width: 300px; }
+  .leagueMotto { position: absolute; right: 0; top: 47px; font-size: 16px; letter-spacing: 1px; }
+  .leftLights { left: 35%; top: -3px; }
+  .rightLights { right: 0; top: -3px; }
+  .homeDashboard { display: grid; grid-template-columns: minmax(0,1.65fr) minmax(300px,1fr); gap: 16px; align-items: start; }
+  .homeDashboard > .card { margin: 0; }
+  .homeDashboard .leagueSummary { grid-column: 1 / -1; }
+  .homeDashboard .standingsCard { grid-column: 1; grid-row: 2 / span 4; }
+  .homeDashboard .announcement,.homeDashboard .scoringCard,.homeDashboard .alertCard { grid-column: 2; }
+  .summaryStat { justify-content: center; gap: 16px; }
+  .summaryStat strong { font-size: 28px; }
+  .summaryStat small,.summaryStat em { font-size: 10px; }
+  .summaryIcon { font-size: 29px; }
+  .standingsHeader { padding-left: 7px; padding-right: 7px; }
+  .bottomNav button { width: 140px; font-size: 11px; }
+}
+@media (max-width: 380px) {
+  .hero { padding-top: 40px; }
+  .brandTop,.brandBottom { font-size: 37px; }
+  .upArrow,.downArrow { font-size: 62px; }
+  .leagueMotto { font-size: 8px; letter-spacing: 0; }
+  .summaryStat strong { font-size: 18px; }
+  .summaryStat small,.summaryStat em { font-size: 7px; }
+  .card { padding: 14px; }
+  .leagueSummary { padding: 12px 5px; }
+}
