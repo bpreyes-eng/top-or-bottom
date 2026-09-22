@@ -286,6 +286,8 @@ function Home({ league, setTab }) {
 
       </section>
 
+      <WeekTwoNewsletter />
+
       {pending > 0 && (
 
         <section className="card alertCard">
@@ -386,6 +388,170 @@ function Home({ league, setTab }) {
 
   );
 
+}
+
+function WeekTwoNewsletter() {
+  const standings = [
+    ['1', 'Rico', 'Jed York', '5.0'],
+    ['2', 'David', 'Salvadorks', '5.0'],
+    ['3', 'Anthony', 'Quest for Shiva', '4.0'],
+    ['4', 'Andy', 'SurferGuy 69', '3.0'],
+    ['5', 'Art', 'Takin Da Browns to Da Super Bowl', '3.0'],
+    ['6', 'Rod', 'I cho cho choose u', '3.0'],
+    ['7', 'Bernardo', 'Tua in the Pink', '2.0'],
+    ['8', 'Ken', 'Kick Names, Take Ass', '2.0'],
+    ['9', 'Rob', 'Japilino', '1.0'],
+    ['10', 'John', 'Football is Life', '1.0'],
+  ];
+
+  return (
+    <section className="card newsletterCard">
+      <div className="newsletterKicker">📰 THIS WEEK IN TOP OR BOTTOM</div>
+      <h2>Rico Is Getting Suspicious</h2>
+      <p className="newsletterDeck">
+        Rico remains in first, Anthony goes 3–0, Ken answers a strong Week 1
+        by going 0–3, and undrafted Minnesota is somehow still undefeated.
+      </p>
+
+      <blockquote>
+        “Thirty teams selected. Ten owners. Hundreds of years of combined
+        football knowledge. And we collectively looked at an undefeated NFL
+        team and said: Nah.”
+      </blockquote>
+
+      <details className="newsletterIssue">
+        <summary>Read the Week 2 newsletter <span>↓</span></summary>
+        <div className="newsletterBody">
+          <header className="newsletterLead">
+            <span>WEEK 2 NEWSLETTER</span>
+            <h3>Rico Is Getting Suspicious</h3>
+            <p>10 owners. 30 drafted teams. 2 free agents. And apparently Rico has learned how football works.</p>
+          </header>
+
+          <p>
+            Week 2 is officially over, and we need to address the elephant in
+            the room: <strong>Rico is still in first place.</strong> This is no
+            longer funny. Well… it’s still pretty funny.
+          </p>
+
+          <article>
+            <span className="newsletterLabel">🚨 BREAKING NEWS</span>
+            <h3>Rico remains in first place</h3>
+            <p><strong>Rico — Jed York — 5.0 points</strong></p>
+            <p>
+              Rico added two wins in Week 2. Seattle and Buffalo delivered;
+              Chicago prevented another perfect week. Thank you, Bears. The
+              league appreciates your service.
+            </p>
+          </article>
+
+          <article>
+            <span className="newsletterLabel">🥈 DAVID REFUSES TO GO AWAY</span>
+            <h3>Doing everything right—and still second</h3>
+            <p><strong>David — Salvadorks — 5.0 points</strong></p>
+            <p>
+              David also went 2–1 and remains tied with Rico. The tiebreaker
+              keeps Rico ahead, which means Rico still gets to tell everyone
+              he’s in first. That’s probably the worst part.
+            </p>
+          </article>
+
+          <article>
+            <span className="newsletterLabel">🚀 BIGGEST MOVE OF THE WEEK</span>
+            <h3>Anthony went 3-for-3</h3>
+            <p><strong>Anthony — Quest for Shiva — 4.0 points</strong></p>
+            <p>
+              Dallas, Kansas City and New England completed the sweep. Anthony
+              jumped from the giant one-point traffic jam directly into the
+              championship conversation. Someone check his roster for
+              performance-enhancing substances.
+            </p>
+          </article>
+
+          <article>
+            <span className="newsletterLabel">📈 MOVING UP</span>
+            <h3>Andy and Art are alive</h3>
+            <p>
+              Andy caught two wins and is paddling toward the front.
+              Meanwhile, Art also went 2–1—and yes, the Browns won.
+              “Takin Da Browns to Da Super Bowl” suddenly looks approximately
+              4% less ridiculous.
+            </p>
+          </article>
+
+          <article>
+            <span className="newsletterLabel">😐 THE MIDDLE</span>
+            <h3>Bernardo, Ken and Rod</h3>
+            <p>
+              Carolina did the heavy lifting for Bernardo. Ken entered Week 2
+              alone in third and responded by going 0–3. Rod owned both teams
+              in Monday night’s Rams-Giants game, allowing him to win and lose
+              at the same time. Impressive efficiency.
+            </p>
+          </article>
+
+          <article>
+            <span className="newsletterLabel">💀 BOTTOM WATCH</span>
+            <h3>Rob has activated Bottom Mode™</h3>
+            <p>
+              Detroit, Houston and Tampa Bay all lost, leaving Rob at one
+              point. John also sits at one after accidentally winning his
+              first game. We officially have a Bottom championship race.
+            </p>
+          </article>
+
+          <section className="newsletterStandings" aria-label="Week 2 standings">
+            <span className="newsletterLabel">OFFICIAL STANDINGS</span>
+            {standings.map(([rank, owner, team, points]) => (
+              <div className="newsletterStandingRow" key={owner}>
+                <b>{rank}</b>
+                <span><strong>{owner}</strong><small>{team}</small></span>
+                <strong>{points}</strong>
+              </div>
+            ))}
+            <small className="newsletterFootnote">
+              Tied teams are ordered using the league point-differential tiebreaker.
+            </small>
+          </section>
+
+          <article>
+            <span className="newsletterLabel">👻 NOBODY WANTED US REPORT</span>
+            <h3>Minnesota is 2–0—and none of us drafted them</h3>
+            <p>
+              Thirty teams selected. Ten owners. Three selections each.
+              Hundreds of years of combined football knowledge.* We
+              collectively looked at an undefeated NFL team and said “Nah.”
+            </p>
+            <small>*Combined football knowledge estimate has not been independently verified.</small>
+          </article>
+
+          <article className="newsletterPayout">
+            <span className="newsletterLabel">🏆 IF THE SEASON ENDED TODAY</span>
+            <p><strong>TOP: Rico — 5 points</strong></p>
+            <p><strong>BOTTOM: John — 1 point</strong></p>
+            <p>
+              The dangerous place is the middle. Nobody gets paid for seventh.
+              Nobody gets paid for fourth. Nobody remembers fifth.
+              <strong> In Top or Bottom, mediocrity is the enemy.</strong>
+            </p>
+          </article>
+
+          <footer className="newsletterSignoff">
+            <h3>Week 3 storylines</h3>
+            <p>
+              Can Rico’s unnecessary Cinderella story continue? Can David
+              finally take first? Can Anthony repeat his monster week? Will
+              Minnesota go 3–0 while sitting completely undrafted? And who
+              will pretend by Sunday night that they were trying to finish
+              last all along?
+            </p>
+            <strong>Commissioner Bernardo 🏈</strong>
+            <small>Where first place gets paid, last place gets paid, and everyone in between made terrible life choices.</small>
+          </footer>
+        </div>
+      </details>
+    </section>
+  );
 }
 
 function SummaryStat({ icon, label, value, detail }) {
