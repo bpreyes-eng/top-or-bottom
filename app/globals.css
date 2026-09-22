@@ -937,3 +937,183 @@ button:focus-visible,select:focus-visible { outline: 2px solid #ffe28b; outline-
 @media (max-width: 380px) {
   .bottomNav button { font-size: 8px; }
 }
+
+
+/* Weekly newsletter */
+.newsletterCard {
+  overflow: hidden;
+  border-color: #e4b83f;
+  background:
+    radial-gradient(circle at 100% 0,rgba(224,181,43,.16),transparent 16rem),
+    linear-gradient(145deg,#17130a,#080909 58%);
+}
+.newsletterKicker,
+.newsletterLabel {
+  display: block;
+  color: var(--gold2);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 1.15px;
+}
+.newsletterCard > h2 {
+  margin: 9px 0 8px;
+  font-family: Impact,"Arial Black",sans-serif;
+  font-size: clamp(27px,8vw,40px);
+  line-height: 1;
+  letter-spacing: .2px;
+  color: #fff5c2;
+  text-transform: uppercase;
+}
+.newsletterDeck {
+  margin: 0;
+  color: #e7e3d9;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.newsletterCard blockquote {
+  margin: 16px 0;
+  padding: 13px 14px;
+  border-left: 3px solid var(--gold);
+  background: #0007;
+  color: #f4e4ad;
+  font-size: 13px;
+  font-style: italic;
+  line-height: 1.5;
+}
+.newsletterIssue {
+  margin: 2px -18px -18px;
+}
+.newsletterIssue > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 50px;
+  padding: 14px 18px;
+  border-top: 1px solid #765b1f;
+  color: #090806;
+  background: linear-gradient(180deg,#f3cc59,#b98219);
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  cursor: pointer;
+  list-style: none;
+}
+.newsletterIssue > summary::-webkit-details-marker { display: none; }
+.newsletterIssue > summary span {
+  font-size: 18px;
+  transition: transform .2s ease;
+}
+.newsletterIssue[open] > summary span { transform: rotate(180deg); }
+.newsletterBody {
+  padding: 8px 18px 18px;
+  background: linear-gradient(#100f0b,#070808);
+}
+.newsletterBody > p,
+.newsletterBody article p,
+.newsletterBody footer p {
+  color: #d8d5cd;
+  font-size: 15px;
+  line-height: 1.65;
+}
+.newsletterBody article,
+.newsletterStandings,
+.newsletterSignoff {
+  padding: 20px 0;
+  border-top: 1px solid #ffffff18;
+}
+.newsletterBody article h3,
+.newsletterLead h3,
+.newsletterSignoff h3 {
+  margin: 7px 0 8px;
+  color: #fff;
+  font-size: 20px;
+  line-height: 1.18;
+}
+.newsletterLead {
+  padding: 19px 0 17px;
+  text-align: center;
+}
+.newsletterLead > span {
+  color: var(--gold2);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.8px;
+}
+.newsletterLead h3 {
+  margin: 7px 0 5px;
+  font-family: Impact,"Arial Black",sans-serif;
+  color: #ffe797;
+  font-size: 27px;
+  text-transform: uppercase;
+}
+.newsletterLead p {
+  margin: 0;
+  color: #aaa69e;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.newsletterStandingRow {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  min-height: 49px;
+  border-bottom: 1px solid #ffffff12;
+}
+.newsletterStandingRow > b {
+  color: #8f8d86;
+  font-size: 13px;
+}
+.newsletterStandingRow > span strong,
+.newsletterStandingRow > span small {
+  display: block;
+}
+.newsletterStandingRow > span strong { font-size: 14px; }
+.newsletterStandingRow > span small {
+  margin-top: 2px;
+  color: #8f8d86;
+  font-size: 11px;
+}
+.newsletterStandingRow > strong {
+  color: var(--gold2);
+  font-size: 17px;
+}
+.newsletterFootnote {
+  display: block;
+  margin-top: 11px;
+  color: #8f8d86;
+  line-height: 1.45;
+}
+.newsletterBody article > small,
+.newsletterSignoff small {
+  display: block;
+  color: #8f8d86;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.newsletterPayout {
+  padding-left: 14px !important;
+  border-left: 3px solid var(--gold);
+}
+.newsletterSignoff strong {
+  display: block;
+  color: var(--gold2);
+  margin-top: 14px;
+}
+.newsletterSignoff small { margin-top: 6px; }
+
+@media (min-width: 960px) {
+  .homeDashboard .newsletterCard {
+    grid-column: 2;
+  }
+  .newsletterIssue {
+    margin-left: -18px;
+    margin-right: -18px;
+  }
+}
+@media (max-width: 380px) {
+  .newsletterIssue { margin-left: -14px; margin-right: -14px; margin-bottom: -14px; }
+  .newsletterIssue > summary { padding-left: 14px; padding-right: 14px; }
+  .newsletterBody { padding-left: 14px; padding-right: 14px; }
+}
