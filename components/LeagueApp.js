@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import Image from 'next/image';
+import SiteAnalytics, { usePageTracking } from './SiteAnalytics';
 
 const tabs = [
 
@@ -141,6 +142,7 @@ const sortOwners = owners =>
 export default function LeagueApp({ league }) {
 
   const [tab, setTab] = useState('home');
+  usePageTracking(tab);
 
   const [selectedOwner, setSelectedOwner] = useState(3);
 
@@ -1245,6 +1247,8 @@ function Commish({ league }) {
         <p className="muted bodyText">League oversight, moves and accounting.</p>
 
       </section>
+
+      <SiteAnalytics />
 
       <div className="statGrid">
 
