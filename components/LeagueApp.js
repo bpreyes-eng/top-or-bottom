@@ -286,7 +286,7 @@ function Home({ league, setTab }) {
 
       </section>
 
-      <WeekTwoNewsletter />
+      <WeekThreeNewsletter />
 
       {pending > 0 && (
 
@@ -388,6 +388,120 @@ function Home({ league, setTab }) {
 
   );
 
+}
+
+
+const weekThreeSections = [
+  [
+    "🚨 ART HAS ACCIDENTALLY BUILT A CONTENDER",
+    "Takin Da Browns to Da Super Bowl | 6 points | Week 3: 3–0",
+    "Cleveland. Indianapolis. Las Vegas.\n\nWhen Art drafted those three teams, nobody asked about his strategy.\n\nWe asked if he needed a ride home.\n\nNow all three won in the same week.\n\nArt has six points and is one behind Rico.\n\n**This man ordered the basement and got upgraded to a suite.**\n\nThe Browns are contributing. The Raiders are undefeated. The Colts helped.\n\nThat roster looked like three check-engine lights. Apparently it’s a Ferrari.\n\nArt, if you were trying to finish last, this is a deeply embarrassing performance.\n\nPlease take your winning somewhere else. You’re upsetting the people who actually tried."
+  ],
+  [
+    "👑 RICO: WE’VE LET THIS GO ON LONG ENOUGH",
+    "Jed York | 7 points | Week 3: 2–1",
+    "Rico is still in first.\n\nThree weeks ago, that was a funny little accident.\n\nNow it’s becoming a workplace issue.\n\nBuffalo won. Chicago won. Seattle lost, presumably to keep Rico humble.\n\nIt did not work.\n\nThe Bears beat David’s Eagles on Monday night, so Rico got to watch his own total rise while David sat there holding the remote like it owed him money.\n\n**Rico has reached the stage where he might start giving advice.**\n\nWe cannot allow this.\n\nIf he says “the key is trusting your draft board,” somebody unplug the Wi-Fi."
+  ],
+  [
+    "😤 DAVID WOULD LIKE TO SPEAK TO THE MANAGER",
+    "Salvadorks | 6 points | Week 3: 1–2",
+    "David drafted Baltimore, Cincinnati and Philadelphia.\n\nThat sounds like a serious person making serious football decisions.\n\nArt drafted Cleveland, Indianapolis and Las Vegas.\n\nThat sounds like the itinerary for a regrettable bachelor party.\n\n**They have the same number of points.**\n\nDavid did the research. Art apparently shook a Magic 8 Ball until it said “Browns.”\n\nNow David has to share the six-point table with him.\n\nThere is no refund policy, David. We checked."
+  ],
+  [
+    "🚂 ROD: “I CHO CHO CHOOSE… WHATEVER’S HAPPENING”",
+    "I cho cho choose u | 5 points | Week 3: 2–1",
+    "Rod owns Denver, the Rams and the Giants.\n\nThe Giants won.\n\nWe’ll give you a moment.\n\nRod also had Denver playing the Rams, which meant he could spend the entire game yelling:\n\n**“LET’S GO!”**\n\nImmediately followed by:\n\n**“WHAT THE HELL ARE YOU DOING?”**\n\nHe’s watching football with the emotional stability of a printer that says there’s a paper jam when there is no paper jam.\n\nStill, two wins put him at five points.\n\nRod’s train is moving up the standings. Whether he bought a ticket for that direction remains unclear."
+  ],
+  [
+    "📉 ANTHONY HAS BEEN RETURNED TO FACTORY SETTINGS",
+    "Quest for Shiva | 5 points | Week 3: 1–2",
+    "Last week, Anthony went 3–0.\n\nThis week, he went 1–2.\n\nApparently the premium subscription expired.\n\nKansas City delivered. Dallas and New England sent their apologies in the form of absolutely nothing.\n\nAnthony went from “everybody needs to watch out” to “there’s still a lot of football left” in seven days.\n\n**“There’s still a lot of football left” is fantasy football for “please stop looking at me.”**"
+  ],
+  [
+    "🏄 ANDY IS CURRENTLY WINNING A FREE NOTHING",
+    "SurferGuy 69 | 4 points | Week 3: 1–2",
+    "San Francisco is doing the work.\n\nGreen Bay and the Chargers are the other two guys in the group project who say:\n\n**“Just put all our names on it.”**\n\nAndy has four points.\n\nToo many to feel good about the Bottom.\n\nToo few to feel good about the Top.\n\nHe has successfully found the exact temperature of room-temperature water.\n\nSurferGuy 69 isn’t catching a wave.\n\nHe’s standing in the pool while the lifeguard asks if he’s getting in or getting out."
+  ],
+  [
+    "⚖️ BERNARDO: AN INDEPENDENT INVESTIGATION HAS CLEARED ME",
+    "Tua in the Pink | 3 points | Week 3: 1–2",
+    "As commissioner, I would like to address concerns about my three-point total.\n\nI built the site.\n\nI maintain the standings.\n\nI write the newsletter.\n\n**Apparently choosing three useful football teams was where I decided to draw the line.**\n\nAtlanta won this week, which was nice.\n\nArizona and Carolina continue to provide character development.\n\nI am not struggling.\n\nI am gathering material.\n\nUnfortunately, the material is me."
+  ],
+  [
+    "🪑 KEN: PLEASE REMAIN SEATED",
+    "Kick Names, Take Ass | 3 points | Week 3: 1–2",
+    "Ken started the season near the top.\n\nThen went 0–3.\n\nThen added one win.\n\nThis isn’t a championship run. It’s a shopping cart with one bad wheel.\n\nPittsburgh contributed while the Jets and Titans continued their unpaid internships.\n\n“Kick Names, Take Ass” sounds aggressive.\n\nAt three points, we may need to rebrand:\n\n**“Take a Number, Have a Seat.”**"
+  ],
+  [
+    "💀 ROB: DETROIT HAS VIOLATED THE PLAN",
+    "Japilino | 2 points | Week 3: 1–2",
+    "Rob was putting together a respectable Bottom campaign.\n\nThen Detroit won.\n\nYou hate to see an organization undermine its owner like that.\n\nHouston and Tampa Bay understood the assignment.\n\nDetroit showed up early, finished the work and ruined everything for the group.\n\nRob is still tied for the lowest point total, but this kind of initiative cannot continue.\n\n**There is no “W” in “Japilino.”**\n\nPlease respect the branding."
+  ],
+  [
+    "🪦 JOHN: FOOTBALL IS LIFE, AND LIFE NEEDS TO CALM DOWN",
+    "Football is Life | 2 points | Week 3: 1–2",
+    "John opened the season with zero wins.\n\nBeautiful work. Clear vision. Strong execution.\n\nThen he won a game in Week 2.\n\nNow another in Week 3.\n\nJohn, this is how bad habits start.\n\nWashington beat Seattle, which helped John while hurting Rico.\n\nFor one brief moment, John was a public servant.\n\nUnfortunately, the payment was a point he may not have wanted.\n\n**John and Rob are now tied at the Bottom, like two guys politely holding the door for each other.**\n\n“No, you finish last.”\n\n“No, please. After you.”\n\nMeanwhile, the rest of us are paying $20 to watch this."
+  ]
+];
+const weekThreeDamage = [["Rico","2–1",7,"Becoming unbearable"],["David","1–2",6,"Requesting a supervisor"],["Art","3–0",6,"Failed successfully"],["Anthony","1–2",5,"Free trial expired"],["Rod","2–1",5,"Train going somewhere"],["Andy","1–2",4,"Participation certificate"],["Bernardo","1–2",3,"Investigating himself"],["Ken","1–2",3,"Waiting to be seated"],["Rob","1–2",2,"Filing a complaint against Detroit"],["John","1–2",2,"Developing a winning problem"]];
+function NewsletterParagraphs({ text }) {
+  return text.split('\n\n').map((paragraph, i) => (
+    <p key={i}>{paragraph.split('**').map((part, j) =>
+      j % 2 ? <strong key={j}>{part}</strong> : part
+    )}</p>
+  ));
+}
+function WeekThreeNewsletter() {
+  return (
+    <section className="card newsletterCard">
+      <div className="newsletterKicker">📰 THIS WEEK IN TOP OR BOTTOM • WEEK 3</div>
+      <h2>Task Failed Successfully</h2>
+      <p className="newsletterDeck">Some owners drafted like they were trying to lose… and accidentally ended up on the winning side. Art sweeps, Rico threatens to start a podcast, and the Bottom race gets personal.</p>
+      <blockquote>“This man ordered the basement and got upgraded to a suite.”</blockquote>
+      <details className="newsletterIssue">
+        <summary>Read the Week 3 newsletter <span>↓</span></summary>
+        <div className="newsletterBody" style={{fontSize:'1rem'}}>
+          <header className="newsletterLead">
+            <span>TOP OR BOTTOM — WEEK 3</span>
+            <h3>Task Failed Successfully</h3>
+          </header>
+          <NewsletterParagraphs text={"**Some of you drafted to win. Some of you drafted to lose. After three weeks, we’re starting to suspect neither group knew what the hell they were doing.**\n\nWelcome back to the only league where you can watch your team score a touchdown and yell:\n\n**“YOU INCONSIDERATE PIECE OF SHIT.”**\n\nThis week’s biggest story: owners who looked like they were building a last-place roster are suddenly on the winning side.\n\nTurns out you can’t even trust bad teams to be bad anymore.\n\nWhich brings us to our Employee of the Week."} />
+          {weekThreeSections.map(([title, meta, text]) => (
+            <article key={title}>
+              <h3>{title}</h3>
+              <p><strong>{meta}</strong></p>
+              <NewsletterParagraphs text={text} />
+            </article>
+          ))}
+          <section className="newsletterStandings" aria-label="Week 3 damage report">
+            <h3>📊 THE DAMAGE REPORT</h3>
+            {weekThreeDamage.map(([owner, week, total, diagnosis]) => (
+              <div key={owner} className="newsletterStandingRow" style={{gridTemplateColumns:'minmax(0,1fr) auto'}}>
+                <span><strong>{owner} • Week 3: {week}</strong><small>{diagnosis}</small></span>
+                <strong>{total} pts</strong>
+              </div>
+            ))}
+            <small className="newsletterFootnote">Totals use the saved draft rosters, assuming no roster changes. Tied totals are grouped without assigning tiebreaker positions.</small>
+          </section>
+          <article>
+            <h3>👻 THE “NOBODY WANTED US” REPORT</h3>
+            <p><strong>Minnesota: 3–0 | Jacksonville: 2–1</strong></p>
+            <NewsletterParagraphs text={"The two teams we left undrafted have five combined wins.\n\nMinnesota alone has more wins than Rob’s entire roster.\n\nAnd John’s.\n\nAnd as many as mine.\n\n**An empty chair could have drafted Minnesota and outperformed several paying members of this league.**\n\nWe should invite the chair next season.\n\nIt’s available on draft night, doesn’t argue about the rules, and has already demonstrated excellent judgment by staying out of the group chat."} />
+          </article>
+          <footer className="newsletterSignoff">
+            <h3>🏆 COMMISSIONER’S CLOSING STATEMENT</h3>
+            <NewsletterParagraphs text={"Art looks like he tried to lose and accidentally became good.\n\nDavid tried to be good and now has to explain why he’s tied with Art.\n\nRob and John are trying to stay down, but their teams keep showing occasional signs of employment.\n\nAnd Rico is one more good week away from starting a podcast.\n\n**For the sake of all ten owners, somebody stop that man.**"} />
+            <strong>Commissioner Bernardo 🏈</strong>
+            <small>Top or Bottom: You can win by losing. Apparently, you can also lose at losing.</small>
+          </footer>
+        </div>
+      </details>
+      <details style={{marginTop:32}}>
+        <summary style={{cursor:'pointer',color:'var(--gold2)',padding:'12px 0',fontSize:14}}>Previous issue: Week 2 — Rico Is Getting Suspicious</summary>
+        <WeekTwoNewsletter />
+      </details>
+    </section>
+  );
 }
 
 function WeekTwoNewsletter() {
