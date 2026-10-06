@@ -283,6 +283,14 @@ function Home({ league, setTab }) {
         <div className="sectionTitle">LEAGUE ANNOUNCEMENT</div>
 
         <p>{league.announcement}</p>
+        <article aria-label="Trade announcement" style={{marginTop:16,paddingTop:16,borderTop:'1px solid #765b1f'}}>
+          <h2 style={{margin:'0 0 10px',fontSize:20,color:'var(--gold2)'}}>🤝 Trade completed: Andy &amp; Bernardo</h2>
+          <p><strong>Bernardo receives:</strong> Los Angeles Chargers</p>
+          <p style={{marginTop:6}}><strong>Andy receives:</strong> Carolina Panthers</p>
+          <p style={{marginTop:10,fontSize:14,color:'#ccc'}}>Effective Week 5 • October 6, 2026 • No fee</p>
+          <p style={{marginTop:8,fontSize:14,color:'#ccc'}}>Previous points stay with the original owner. Future eligible wins and ties count for the new owner.</p>
+          <button className="textButton" style={{fontSize:14,marginTop:8}} onClick={() => setTab('standings')}>View trade and points breakdown ›</button>
+        </article>
 
       </section>
 
