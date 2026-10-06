@@ -724,55 +724,57 @@ function SummaryStat({ icon, label, value, detail }) {
 }
 
 function Standings({ league }) {
-
   const sorted = sortOwners(league.owners);
-
   return (
-
     <section className="card flush standingsCard">
-
       <div className="pageTitle">Standings</div>
-
       <div className="goldRule" />
-
-      <div className="subtleNote">
-
-        Week {league.currentWeek} • Refresh the page to check for updated results.
-
-      </div>
-
-      <div className="standingsHeader">
-
-        <span>RK</span><span>TEAM / OWNER</span><span>PTS</span>
-
-      </div>
-
+      <p className="bodyText" style={{marginBottom:16}}>Open an owner’s points breakdown to see what each NFL team earned for that owner. Points earned before a trade stay with the original owner.</p>
       {sorted.map((o, i) => (
-
-        <OwnerRow
-
-          key={o.id}
-
-          league={league}
-
-          owner={o}
-
-          rank={i + 1}
-
-          detailed
-
-          leader={i === 0}
-
-          bottom={i === sorted.length - 1}
-
-        />
-
+        <div key={o.id}>
+          <OwnerRow league={league} owner={o} rank={i + 1} detailed leader={i === 0} bottom={i === sorted.length - 1} />
+          <details style={{padding:'0 8px 16px'}}>
+            <summary style={{cursor:'pointer',color:'var(--gold2)',padding:'10px 0',fontSize:16}}>Points breakdown — {o.ownerName}</summary>
+            <div style={{overflowX:'auto'}}>
+              <table style={{width:'100%',borderCollapse:'collapse',fontSize:14,textAlign:'left'}}>
+                <caption style={{textAlign:'left',padding:'8px 0',color:'#aaa'}}>NFL results while owned • 1 point per win, 0.5 per tie</caption>
+                <thead><tr><th scope="col">NFL team</th><th scope="col">W–L–T</th><th scope="col">Earned</th></tr></thead>
+                <tbody>
+                  {[...new Set([...o.teams, ...Object.keys(o.teamContributions || {})])].map(team => {
+                    const result = o.teamContributions?.[team] || {points:0,wins:0,losses:0,ties:0};
+                    return <tr key={team}>
+                      <th scope="row" style={{padding:'12px 8px 12px 0',borderTop:'1px solid #333',fontWeight:400}}>
+                        {fullNames[team] || team}
+                        <span style={{display:'block',color:'#aaa',fontSize:13}}>{o.teams.includes(team) ? 'Current roster' : 'Former team • points retained'}</span>
+                      </th>
+                      <td style={{whiteSpace:'nowrap',borderTop:'1px solid #333'}}>{result.wins}–{result.losses}–{result.ties}</td>
+                      <td style={{color:'var(--gold2)',fontWeight:800,borderTop:'1px solid #333'}}>{Number(result.points).toFixed(1)}</td>
+                    </tr>;
+                  })}
+                </tbody>
+                <tfoot><tr><th scope="row" colSpan={2} style={{padding:'12px 0'}}>Owner total</th><td style={{fontWeight:800,color:'var(--gold2)'}}>{Number(o.points).toFixed(1)}</td></tr></tfoot>
+              </table>
+            </div>
+          </details>
+        </div>
       ))}
-
+      <h2 style={{fontSize:20}}>Completed trades</h2>
+      {league.trades.filter(t => t.status === 'completed').length === 0 ? <p>No completed trades.</p> :
+        league.trades.filter(t => t.status === 'completed').map(t => (
+          <article key={t.id} style={{padding:'14px 0',borderTop:'1px solid #333',fontSize:16,lineHeight:1.6}}>
+            <strong>{t.proposerName} ↔ {t.recipientName}</strong>
+            {(t.items || []).map(item => {
+              const from = league.owners.find(o => o.id === Number(item.fromOwnerId));
+              const toId = Number(item.fromOwnerId) === t.proposerOwnerId ? t.recipientOwnerId : t.proposerOwnerId;
+              const to = league.owners.find(o => o.id === toId);
+              return <div key={item.team}>{fullNames[item.team] || item.team}: {from?.ownerName} → {to?.ownerName}</div>;
+            })}
+            <div style={{color:'#bbb',fontSize:14}}>Effective {new Date(t.completedAt).toLocaleString('en-US',{timeZone:'America/Los_Angeles',month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'})} PT • No fee</div>
+            <div style={{color:'#bbb',fontSize:14}}>Earlier points remain with the original owner.</div>
+          </article>
+        ))}
     </section>
-
   );
-
 }
 
 function OwnerRow({
@@ -1141,7 +1143,7 @@ function MyTeam({ league, owner, selectedOwner, setSelectedOwner }) {
 
               <strong>{fullNames[team]}</strong>
 
-              <small>Season points: {Number(league.teamPoints?.[team] || 0).toFixed(1)}</small>
+              <small>Points earned for {owner.ownerName}: {Number(owner.teamContributions?.[team]?.points || 0).toFixed(1)}</small>
 
             </div>
 
