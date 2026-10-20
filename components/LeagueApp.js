@@ -268,7 +268,7 @@ function Home({ league, setTab }) {
 
           value={`$${league.pot.toFixed(0)}`}
 
-          detail="$20 × 10"
+          detail="ENTRY + MOVE FEES"
 
         />
 
