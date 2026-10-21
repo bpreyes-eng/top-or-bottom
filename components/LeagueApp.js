@@ -14,7 +14,7 @@ const tabs = [
 
   ['team', '★', 'My Team'],
 
-  ['moves', '⇄', 'Moves'],
+  ['moves', '⇄', 'Transactions'],
 
   ['rules', '☷', 'Rules'],
 
@@ -283,17 +283,12 @@ function Home({ league, setTab }) {
         <div className="sectionTitle">LEAGUE ANNOUNCEMENT</div>
 
         <p>{league.announcement}</p>
-        <article aria-label="Trade announcement" style={{marginTop:16,paddingTop:16,borderTop:'1px solid #765b1f'}}>
-          <h2 style={{margin:'0 0 10px',fontSize:20,color:'var(--gold2)'}}>🤝 Trade completed: Andy &amp; Bernardo</h2>
-          <p><strong>Bernardo receives:</strong> Los Angeles Chargers</p>
-          <p style={{marginTop:6}}><strong>Andy receives:</strong> Carolina Panthers</p>
-          <p style={{marginTop:10,fontSize:14,color:'#ccc'}}>Effective Week 5 • October 6, 2026 • No fee</p>
-          <p style={{marginTop:8,fontSize:14,color:'#ccc'}}>Previous points stay with the original owner. Future eligible wins and ties count for the new owner.</p>
-          <button className="textButton" style={{fontSize:14,marginTop:8}} onClick={() => setTab('standings')}>View trade and points breakdown ›</button>
-        </article>
+
 
       </section>
 
+      <TransactionLedger league={league} limit={4} onViewAll={() => setTab('moves')} />
+      <AvailableTeams league={league} />
       <WeekSixNewsletter />
 
       {pending > 0 && (
@@ -1252,6 +1247,51 @@ function MyTeam({ league, owner, selectedOwner, setSelectedOwner }) {
 
 }
 
+
+function leagueTransactions(league) {
+  return [
+    ...league.addDropRequests.map(m => ({...m, kind:'adddrop', key:'adddrop-'+m.id, timestamp:m.completedAt || m.submittedAt})),
+    ...league.trades.map(m => ({...m, kind:'trade', key:'trade-'+m.id, timestamp:m.completedAt || m.submittedAt}))
+  ].sort((a,b) => new Date(b.timestamp)-new Date(a.timestamp));
+}
+function TransactionLedger({league, limit, onViewAll}) {
+  const all=leagueTransactions(league);
+  const rows=limit ? all.slice(0,limit) : all;
+  return <section className="card" aria-label={limit ? 'Recent transactions' : 'All league transactions'}>
+    <div className="cardHeader"><h2 className="sectionTitle">{limit ? 'RECENT TRANSACTIONS' : 'LEAGUE TRANSACTION HISTORY'}</h2>
+      {onViewAll && <button className="textButton" onClick={onViewAll}>View all ›</button>}
+    </div>
+    <p className="subtleNote">Earlier points stay with their original owners. New teams earn future points only. Dates shown in Pacific time.</p>
+    {rows.length ? rows.map(m => <article key={m.key} style={{padding:'16px 0',borderTop:'1px solid #333',lineHeight:1.6}}>
+      <div style={{display:'flex',justifyContent:'space-between',gap:12,flexWrap:'wrap'}}>
+        <strong>{m.kind === 'adddrop' ? (m.ownerName || league.owners.find(o=>o.id===m.ownerId)?.ownerName)+' • Add / Drop' : m.proposerName+' ↔ '+m.recipientName+' • Trade'}</strong>
+        <Status value={m.status} />
+      </div>
+      {m.kind === 'adddrop' ? <>
+        <div><strong>Add:</strong> {fullNames[m.addTeam] || m.addTeam}</div>
+        <div><strong>Drop:</strong> {fullNames[m.dropTeam] || m.dropTeam}</div>
+        <div style={{color:'var(--gold2)'}}><span>$</span>{Number(m.fee || 0).toFixed(0)} • {['completed','paid'].includes(m.status) ? 'Paid' : 'Payment not confirmed'}</div>
+      </> : <>
+        {(m.items || []).map(item => {
+          const from=league.owners.find(o=>o.id===Number(item.fromOwnerId));
+          const toId=Number(item.fromOwnerId)===Number(m.proposerOwnerId) ? Number(m.recipientOwnerId) : Number(m.proposerOwnerId);
+          return <div key={item.team}>{fullNames[item.team] || item.team}: {from?.ownerName} → {league.owners.find(o=>o.id===toId)?.ownerName}</div>;
+        })}
+        <div style={{color:'var(--gold2)'}}>No fee</div>
+      </>}
+      <small style={{color:'#bbb'}}>{m.status==='completed' ? 'Effective ' : 'Submitted '}{m.timestamp ? new Date(m.timestamp).toLocaleString('en-US',{timeZone:'America/Los_Angeles',month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'})+' PT' : 'Date unavailable'}</small>
+    </article>) : <Empty text="No transactions yet." />}
+  </section>;
+}
+function AvailableTeams({league}) {
+  return <section className="card" aria-label="Available NFL teams">
+    <h2 className="sectionTitle">AVAILABLE TEAMS</h2>
+    <p className="subtleNote">$10 per add/drop • Prior wins do not transfer.</p>
+    {league.freeAgents.length ? league.freeAgents.map(team=><div className="nflTeam" key={team}>
+      <TeamBadge team={team} large /><div><strong>{fullNames[team] || team}</strong><small>Free agent</small></div>
+    </div>) : <Empty text="No available teams." />}
+  </section>;
+}
 function Moves({ league, owner }) {
 
   const [moveTab, setMoveTab] = useState('adddrop');
@@ -1270,7 +1310,7 @@ function Moves({ league, owner }) {
 
       <section className="card">
 
-        <div className="pageTitle">Moves</div>
+        <div className="pageTitle">Transactions</div>
 
         <div className="moveTabs">
 
@@ -1294,6 +1334,8 @@ function Moves({ league, owner }) {
 
       </section>
 
+      <TransactionLedger league={league} />
+      <AvailableTeams league={league} />
       {moveTab === 'adddrop' ? (
 
         <>
@@ -1350,23 +1392,7 @@ function Moves({ league, owner }) {
 
           </section>
 
-          <section className="card">
 
-            <div className="sectionTitle">FREE AGENTS</div>
-
-            {league.freeAgents.map(t => (
-
-              <div className="nflTeam" key={t}>
-
-                <TeamBadge team={t} large />
-
-                <div><strong>{fullNames[t]}</strong><small>Available</small></div>
-
-              </div>
-
-            ))}
-
-          </section>
 
         </>
 
