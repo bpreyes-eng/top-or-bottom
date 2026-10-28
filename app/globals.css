@@ -1117,3 +1117,29 @@ button:focus-visible,select:focus-visible { outline: 2px solid #ffe28b; outline-
   .newsletterIssue > summary { padding-left: 14px; padding-right: 14px; }
   .newsletterBody { padding-left: 14px; padding-right: 14px; }
 }
+
+/* Commissioner analytics follows the existing gold dashboard. */
+.analyticsPanel { margin-bottom: 18px; }
+.analyticsHeading { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; align-items: center; }
+.analyticsPanel h2 { margin: 0; font-size: 1.25rem; }
+.analyticsPanel h3 { margin: 24px 0 12px; font-size: 1rem; }
+.analyticsPanel h3 small { display: block; color: #aaa; font-weight: normal; font-size: .875rem; margin-top: 5px; }
+.analyticsUnlock { display: grid; gap: 10px; margin-top: 20px; }
+.analyticsPanel input { width: 100%; min-width: 0; padding: 12px; background: #141414; color: white; border: 1px solid #777; border-radius: 8px; font-size: 1rem; box-sizing: border-box; }
+.analyticsPanel button { min-height: 44px; padding: 10px 16px; background: var(--gold); color: #17130a; border: 0; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: .875rem; }
+.analyticsPanel button:disabled { opacity: .65; cursor: wait; }
+.analyticsPanel :focus-visible { outline: 2px solid white; outline-offset: 3px; }
+.analyticsActions { display: flex; gap: 10px; margin: 20px 0; flex-wrap: wrap; }
+.analyticsStats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+.analyticsStats > div { padding: 14px; border: 1px solid #ffffff24; border-radius: 10px; }
+.analyticsStats strong { display: block; font-size: 1.75rem; color: var(--gold2); overflow-wrap: anywhere; }
+.analyticsStats span { display: block; font-size: .875rem; line-height: 1.5; margin-top: 5px; }
+.analyticsChart { height: 150px; display: flex; gap: 3px; align-items: end; border-bottom: 1px solid #777; margin-top: 20px; }
+.analyticsColumn { height: 100%; flex: 1; display: flex; align-items: end; min-width: 0; }
+.analyticsColumn > div { width: 100%; background: var(--gold); border-radius: 3px 3px 0 0; }
+.analyticsChartDates { display: flex; justify-content: space-between; font-size: .875rem; margin: 10px 0; color: #aaa; }
+.analyticsPanel summary { padding: 10px 0; cursor: pointer; }
+.analyticsDaily { max-height: 280px; overflow-y: auto; }
+.analyticsDevice { text-transform: capitalize; }
+.analyticsNote { font-size: .875rem; line-height: 1.6; margin-top: 20px; }
+@media (min-width: 700px) { .analyticsStats { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
