@@ -1368,6 +1368,24 @@ function leagueTransactions(league) {
     ...league.trades.map(m => ({...m, kind:'trade', key:'trade-'+m.id, timestamp:m.completedAt || m.submittedAt}))
   ].sort((a,b) => new Date(b.timestamp)-new Date(a.timestamp));
 }
+function WeekElevenTradeNotice({league}) {
+  const moves = [
+    {from:'Rod', give:'NYG', to:'Rob', receive:'HOU', label:'Rob receives the New York Giants; Rod receives the Houston Texans.'},
+    {from:'Andy', give:'BAL', to:'Rob', receive:'DET', label:'Rob receives the Baltimore Ravens; Andy receives the Detroit Lions.'},
+  ];
+  const ownerId = name => league.owners.find(o => o.ownerName === name)?.id;
+  const announced = moves.filter(move => !(league.trades || []).some(t =>
+    t.status === 'completed' && Date.parse(t.completedAt) >= Date.parse('2026-11-17T08:00:00Z') &&
+    t.items?.some(i => i.team === move.give && Number(i.fromOwnerId) === Number(ownerId(move.from))) &&
+    t.items?.some(i => i.team === move.receive && Number(i.fromOwnerId) === Number(ownerId(move.to)))
+  ));
+  if (!announced.length) return null;
+  return <section aria-label="Announced trades" style={{borderTop:'1px solid #333',padding:'16px 0'}}>
+    <h3 className="sectionTitle">ANNOUNCED TRADES · EFFECTIVE TUESDAY, NOVEMBER 17</h3>
+    <ul>{announced.map(move => <li key={move.give}>{move.label}</li>)}</ul>
+    <p className="subtleNote">These trades take effect in Week 11. All points through Week 10 stay with the original owners.</p>
+  </section>;
+}
 function TransactionLedger({league, limit, onViewAll}) {
   const all=leagueTransactions(league);
   const rows=limit ? all.slice(0,limit) : all;
@@ -1376,6 +1394,7 @@ function TransactionLedger({league, limit, onViewAll}) {
       {onViewAll && <button className="textButton" onClick={onViewAll}>View all ›</button>}
     </div>
     <p className="subtleNote">Earlier points stay with their original owners. New teams earn future points only. Dates shown in Pacific time.</p>
+    <WeekElevenTradeNotice league={league} />
     {rows.length ? rows.map(m => <article key={m.key} style={{padding:'16px 0',borderTop:'1px solid #333',lineHeight:1.6}}>
       <div style={{display:'flex',justifyContent:'space-between',gap:12,flexWrap:'wrap'}}>
         <strong>{m.kind === 'adddrop' ? (m.ownerName || league.owners.find(o=>o.id===m.ownerId)?.ownerName)+' • Add / Drop' : m.proposerName+' ↔ '+m.recipientName+' • Trade'}</strong>
